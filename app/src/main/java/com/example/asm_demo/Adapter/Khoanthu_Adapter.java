@@ -130,12 +130,13 @@ public class Khoanthu_Adapter extends RecyclerView.Adapter<Khoanthu_Adapter.MyVi
     }
 
     public void capnhat(int index){
-        if (giaodich_dao.getTrangthai(ds_thu.get(index).getMaloai()).equals("Thu")){
-            ds_thu = giaodich_dao.getKhoanThu();
-        } else if (giaodich_dao.getTrangthai(ds_thu.get(index).getMaloai()).equals("Chi")){
-            ds_thu = giaodich_dao.getKhoanChi();
-        }
+//        if (giaodich_dao.getTrangthai(ds_thu.get(index).getMaloai()).equals("Thu")){
+////            ds_thu = giaodich_dao.getKhoanThu();
+////        } else if (giaodich_dao.getTrangthai(ds_thu.get(index).getMaloai()).equals("Chi")){
+////            ds_thu = giaodich_dao.getKhoanChi();
+////        }
 
+        ds_thu = giaodich_dao.getKhoanThu();
         khoanthu_adapter = new Khoanthu_Adapter(ds_thu, context);
         rv_thu.setAdapter(khoanthu_adapter);
     }

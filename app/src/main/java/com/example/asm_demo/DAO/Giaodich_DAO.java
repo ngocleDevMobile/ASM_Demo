@@ -108,18 +108,18 @@ public class Giaodich_DAO {
         return ds_giaodich;
     }
 
-    public String getTrangthai(int id){
-        String ten = "";
-        db1 = db.getWritableDatabase();
-        Cursor cursor = db1.rawQuery("SELECT trangthai FROM LOAI_TC INNER JOIN GIAO_DICH ON LOAI_TC.Maloai = id",null);
-        if (cursor.moveToFirst()){
-            do {
-                ten = cursor.getString(0);
-
-            }while (cursor.moveToNext());
-        }
-        return ten;
-    }
+//    public String getTrangthai(int id){
+//        String ten = "";
+//        db1 = db.getWritableDatabase();
+//        Cursor cursor = db1.rawQuery("SELECT trangthai FROM LOAI_TC INNER JOIN GIAO_DICH ON LOAI_TC.Maloai = id",null);
+//        if (cursor.moveToFirst()){
+//            do {
+//                ten = cursor.getString(0);
+//
+//            }while (cursor.moveToNext());
+//        }
+//        return ten;
+//    }
 
     public ArrayList<Giaodich> getKhoanChi(){
         ArrayList<Giaodich> ds_giaodich = new ArrayList<>();

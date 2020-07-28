@@ -48,12 +48,12 @@ public class Tab_Khoanchi extends Fragment {
             }
         });
 
-        ds_khoanthu = new ArrayList<>();
-        giaodich_dao = new Giaodich_DAO(getContext());
-
-        ds_khoanthu = giaodich_dao.getKhoanChi();
-        khoanthu_adapter = new Khoanthu_Adapter(ds_khoanthu, getContext());
-        rv_thu.setAdapter(khoanthu_adapter);
+//        ds_khoanthu = new ArrayList<>();
+//        giaodich_dao = new Giaodich_DAO(getContext());
+//
+//        ds_khoanthu = giaodich_dao.getKhoanChi();
+//        khoanthu_adapter = new Khoanthu_Adapter(ds_khoanthu, getContext());
+//        rv_thu.setAdapter(khoanthu_adapter);
 
         return view;
     }

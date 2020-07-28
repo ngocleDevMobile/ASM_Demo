@@ -42,7 +42,7 @@ public class Tab_Khoanthu extends Fragment {
 
                 Bottom_sheet_giaodich bottom_sheet = new Bottom_sheet_giaodich();
                 //bottom_sheet.show(((AppCompatActivity)context).getSupportFragmentManager(),"TAG");
-                bottom_sheet.setArguments(args);
+                 bottom_sheet.setArguments(args);
                 bottom_sheet.show(getFragmentManager(),bottom_sheet.getTag());
             }
         });
