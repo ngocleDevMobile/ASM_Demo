@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asm_demo.DAO.Giaodich_DAO;
+import com.example.asm_demo.Dialog.Bottom_sheet_edit_khoanchi;
 import com.example.asm_demo.Dialog.Bottom_sheet_edit_khoanthu;
 import com.example.asm_demo.Modal.Giaodich;
 import com.example.asm_demo.R;
@@ -22,16 +23,16 @@ import com.example.asm_demo.R;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import static com.example.asm_demo.TabFragmnet.Tab_Khoanthu.khoanthu_adapter;
-import static com.example.asm_demo.TabFragmnet.Tab_Khoanthu.rv_thu;
+import static com.example.asm_demo.TabFragmnet.Tab_Khoanchi.khoanchi_adapter;
+import static com.example.asm_demo.TabFragmnet.Tab_Khoanchi.rv_chi;
 
-public class Khoanthu_Adapter extends RecyclerView.Adapter<Khoanthu_Adapter.MyViewHolder> {
-    private ArrayList<Giaodich> ds_thu;
+public class Khoanchi_Adapter extends RecyclerView.Adapter<Khoanchi_Adapter.MyViewHolder> {
+    private ArrayList<Giaodich> ds_chi;
     private Context context;
     Giaodich_DAO giaodich_dao;
 
-    public Khoanthu_Adapter(ArrayList<Giaodich> ds_thu, Context context) {
-        this.ds_thu = ds_thu;
+    public Khoanchi_Adapter(ArrayList<Giaodich> ds_chi, Context context) {
+        this.ds_chi = ds_chi;
         this.context = context;
     }
 
@@ -53,34 +54,35 @@ public class Khoanthu_Adapter extends RecyclerView.Adapter<Khoanthu_Adapter.MyVi
     }
 
     @Override
-    public Khoanthu_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Khoanchi_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_khoan_thu, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_khoan_chi, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tv_tieude.setText(ds_thu.get(position).getTieude());
-        holder.tv_ngay.setText(ds_thu.get(position).getNgay()+"");
+        holder.tv_tieude.setText(ds_chi.get(position).getTieude());
+        holder.tv_ngay.setText(ds_chi.get(position).getNgay()+"");
        //Dinh dang hien thi so tien
         DecimalFormat formatter = new DecimalFormat("#,###");
-        String s = formatter.format(ds_thu.get(position).getTien());
+        String s = formatter.format(ds_chi.get(position).getTien());
         holder.tv_tien.setText(s);
         holder.img_xoa_thu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-                builder1.setMessage("Bạn có chắc muốn xóa "+ds_thu.get(position).getTieude());
+                builder1.setMessage("Bạn có chắc muốn xóa "+ds_chi.get(position).getTieude());
                 builder1.setCancelable(true);
+
                 builder1.setPositiveButton(
                         "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 giaodich_dao = new Giaodich_DAO(context);
-                                giaodich_dao.delete(ds_thu.get(position).getMaGD());
-                                Toast.makeText(context, "Xóa thành công "+ds_thu.get(position).getTieude(), Toast.LENGTH_SHORT).show();
+                                giaodich_dao.delete(ds_chi.get(position).getMaGD());
+                                Toast.makeText(context, "Xóa thành công "+ds_chi.get(position).getTieude(), Toast.LENGTH_SHORT).show();
                                 capnhat();
                                 dialog.cancel();
                             }
@@ -103,14 +105,14 @@ public class Khoanthu_Adapter extends RecyclerView.Adapter<Khoanthu_Adapter.MyVi
             @Override
             public void onClick(View view) {
                 Bundle args = new Bundle();
-                args.putString("MaGD", ds_thu.get(position).getMaGD()+"");
-                args.putString("Tieude", ds_thu.get(position).getTieude()+"");
-                args.putString("Ngay", ds_thu.get(position).getNgay()+"");
-                args.putString("MoTa", ds_thu.get(position).getMota()+"");
-                args.putDouble("Tien", ds_thu.get(position).getTien());
-                args.putString("Maloai", ds_thu.get(position).getMaloai()+"");
+                args.putString("MaGD", ds_chi.get(position).getMaGD()+"");
+                args.putString("Tieude", ds_chi.get(position).getTieude()+"");
+                args.putString("Ngay", ds_chi.get(position).getNgay()+"");
+                args.putString("MoTa", ds_chi.get(position).getMota()+"");
+                args.putDouble("Tien", ds_chi.get(position).getTien());
+                args.putString("Maloai", ds_chi.get(position).getMaloai()+"");
 
-                Bottom_sheet_edit_khoanthu bottom_sheet = new Bottom_sheet_edit_khoanthu();
+                Bottom_sheet_edit_khoanchi bottom_sheet = new Bottom_sheet_edit_khoanchi();
                 //bottom_sheet.show(((AppCompatActivity)context).getSupportFragmentManager(),"TAG");
                 bottom_sheet.setArguments(args);
                 bottom_sheet.show(((AppCompatActivity) context).getSupportFragmentManager(),bottom_sheet.getTag());
@@ -120,7 +122,7 @@ public class Khoanthu_Adapter extends RecyclerView.Adapter<Khoanthu_Adapter.MyVi
     }
     @Override
     public int getItemCount() {
-        return ds_thu.size();
+        return ds_chi.size();
     }
 
     public void capnhat(){
@@ -130,9 +132,9 @@ public class Khoanthu_Adapter extends RecyclerView.Adapter<Khoanthu_Adapter.MyVi
 ////            ds_thu = giaodich_dao.getKhoanChi();
 ////        }
 
-        ds_thu = giaodich_dao.getKhoanThu_Chi("Thu");
-        khoanthu_adapter = new Khoanthu_Adapter(ds_thu, context);
-        rv_thu.setAdapter(khoanthu_adapter);
+        ds_chi = giaodich_dao.getKhoanThu_Chi("Chi");
+        khoanchi_adapter = new Khoanchi_Adapter(ds_chi, context);
+        rv_chi.setAdapter(khoanchi_adapter);
     }
 
 

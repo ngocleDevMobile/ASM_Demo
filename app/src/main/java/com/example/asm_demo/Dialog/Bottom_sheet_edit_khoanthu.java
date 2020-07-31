@@ -1,9 +1,9 @@
 package com.example.asm_demo.Dialog;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +26,7 @@ import com.example.asm_demo.Modal.Phanloai;
 import com.example.asm_demo.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -34,11 +35,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import static com.example.asm_demo.TabFragmnet.Tab_Khoanthu.khoanthu_adapter;
 import static com.example.asm_demo.TabFragmnet.Tab_Khoanthu.rv_thu;
 
-public class Bottom_sheet_edit_giaodich extends BottomSheetDialogFragment {
+public class Bottom_sheet_edit_khoanthu extends BottomSheetDialogFragment {
     EditText edt_tieude,edt_tien,edt_mota;
     TextView tv_ngay;
     Spinner sp_pl_giaodich;
@@ -49,13 +51,13 @@ public class Bottom_sheet_edit_giaodich extends BottomSheetDialogFragment {
     Adapter_sp_thu adapterSpThu;
     int id;
 
-    public Bottom_sheet_edit_giaodich() {
+    public Bottom_sheet_edit_khoanthu() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_sheet_edit_giaodich, container, false);
+        View view = inflater.inflate(R.layout.bottom_sheet_edit_khoanthu, container, false);
        edt_tieude = view.findViewById(R.id.edt_tieude);
        edt_tien = view.findViewById(R.id.edt_tien);
        edt_mota = view.findViewById(R.id.edt_mota);
@@ -135,25 +137,34 @@ public class Bottom_sheet_edit_giaodich extends BottomSheetDialogFragment {
 
                 //double tien = Double.parseDouble(edt_tien.getText().toString());
                 String str = edt_tien.getText().toString();
-                double l = 0.0;
+                int l = 0;
                 try {
-                   l  = DecimalFormat.getNumberInstance().parse(str).doubleValue();
+                   l  = DecimalFormat.getNumberInstance().parse(str).intValue();
                     System.out.println(l); //111111.23
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                DecimalFormat format = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                format.setParseBigDecimal(true);
+                BigDecimal number = null;
+                try {
+                     number = (BigDecimal) format.parse(str);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                int so = Integer.parseInt(number+"");
 
                 //String phanloai = sp_pl_giaodich.getSelectedItem().toString();
                 String mota = edt_mota.getText().toString();
                 int index = sp_pl_giaodich.getSelectedItemPosition();
                 int Maloai = ds_loai_thu.get(index).getId_pl();
 
-                Giaodich gd = new Giaodich(id,tieude,date,l,mota,Maloai);
+                Giaodich gd = new Giaodich(id,tieude,date,so,mota,Maloai);
                 giaodich_dao = new Giaodich_DAO(getContext());
                 giaodich_dao.update(gd);
 
                 capnhat();
-                Toast.makeText(getContext(), "Cập nhật thành công"+l, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Cập nhật thành công"+number, Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });
@@ -161,7 +172,7 @@ public class Bottom_sheet_edit_giaodich extends BottomSheetDialogFragment {
     }
 
     public void capnhat(){
-        ds_thu = giaodich_dao.getKhoanThu();
+        ds_thu = giaodich_dao.getKhoanThu_Chi("Thu");
         khoanthu_adapter = new Khoanthu_Adapter(ds_thu, getContext());
         rv_thu.setAdapter(khoanthu_adapter);
     }
@@ -217,4 +228,7 @@ public class Bottom_sheet_edit_giaodich extends BottomSheetDialogFragment {
             }
         };
     }
+
+
+
 }

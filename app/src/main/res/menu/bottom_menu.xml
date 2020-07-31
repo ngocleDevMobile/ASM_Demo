@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/bot_thu"
+            android:icon="@drawable/ic_money"
+            android:title="Thống kê Thu"
+            />
+        <item
+            android:id="@+id/bot_chi"
+            android:icon="@drawable/ic_money"
+            android:title="Thống kê Chi"
+            />
+
+</menu>

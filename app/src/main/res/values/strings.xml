@@ -2,6 +2,7 @@
     <string name="app_name">ASM_Demo</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
+    <string name="pie_chart">Pie Chart</string>
 
     <string-array name="planets_array">
         <item>Thu</item>

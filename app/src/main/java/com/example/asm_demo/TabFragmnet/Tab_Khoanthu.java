@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asm_demo.Adapter.Khoanthu_Adapter;
 import com.example.asm_demo.DAO.Giaodich_DAO;
-import com.example.asm_demo.Dialog.Bottom_sheet_giaodich;
+import com.example.asm_demo.Dialog.Bottom_sheet_them_thu;
 import com.example.asm_demo.Modal.Giaodich;
 import com.example.asm_demo.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +26,8 @@ public class Tab_Khoanthu extends Fragment {
     public static Khoanthu_Adapter khoanthu_adapter;
     public static ArrayList<Giaodich> ds_khoanthu;
     Giaodich_DAO giaodich_dao;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class Tab_Khoanthu extends Fragment {
                 Bundle args = new Bundle();
                 args.putString("trangthai", "Loai thu");
 
-                Bottom_sheet_giaodich bottom_sheet = new Bottom_sheet_giaodich();
+                Bottom_sheet_them_thu bottom_sheet = new Bottom_sheet_them_thu();
                 //bottom_sheet.show(((AppCompatActivity)context).getSupportFragmentManager(),"TAG");
                  bottom_sheet.setArguments(args);
                 bottom_sheet.show(getFragmentManager(),bottom_sheet.getTag());
@@ -50,9 +52,10 @@ public class Tab_Khoanthu extends Fragment {
         ds_khoanthu = new ArrayList<>();
         giaodich_dao = new Giaodich_DAO(getContext());
 
-        ds_khoanthu = giaodich_dao.getKhoanThu();
+        ds_khoanthu = giaodich_dao.getKhoanThu_Chi("Thu");
         khoanthu_adapter = new Khoanthu_Adapter(ds_khoanthu, getContext());
         rv_thu.setAdapter(khoanthu_adapter);
+
 
         return view;
     }

@@ -36,8 +36,10 @@ import static com.example.asm_demo.Fragment.Fragment_phanloai.phanloai_adapters;
 import static com.example.asm_demo.Fragment.Fragment_phanloai.rv_phanloai;
 import static com.example.asm_demo.TabFragmnet.Tab_Khoanthu.khoanthu_adapter;
 import static com.example.asm_demo.TabFragmnet.Tab_Khoanthu.rv_thu;
+import static com.example.asm_demo.TabFragmnet.Tab_Khoanthu.ds_khoanthu;
+import static com.example.asm_demo.TabFragmnet.Tab_Khoanchi.ds_khoanchi;
 
-public class Bottom_sheet_giaodich extends BottomSheetDialogFragment {
+public class Bottom_sheet_them_thu extends BottomSheetDialogFragment {
     EditText edt_tieude,edt_tien,edt_mota;
     TextView tv_ngay, tv_trangthai;
     Spinner sp_pl_giaodich;
@@ -46,8 +48,9 @@ public class Bottom_sheet_giaodich extends BottomSheetDialogFragment {
     ArrayList<Phanloai> ds_loai_thu;
     ArrayList<Giaodich> ds_thu;
     Adapter_sp_thu adapterSpThu;
+    String trangthai_;
 
-    public Bottom_sheet_giaodich(){
+    public Bottom_sheet_them_thu(){
     }
     @Nullable
     @Override
@@ -63,18 +66,18 @@ public class Bottom_sheet_giaodich extends BottomSheetDialogFragment {
 
        //getBundle
         Bundle getdata = getArguments();
-        String trangthai_ = getdata.getString("trangthai");
+        trangthai_= getdata.getString("trangthai");
         tv_trangthai.setText(trangthai_);
 
        giaodich_dao = new Giaodich_DAO(getContext());
        ds_loai_thu = new ArrayList<>();
-       if (trangthai_.equals("Loai thu")){
-           ds_loai_thu = giaodich_dao.getThu();
-       } else if (trangthai_.equals("Loai chi")){
-           ds_loai_thu = giaodich_dao.getChi();
-       }
+//       if (trangthai_.equals("Loai thu")){
+//           ds_loai_thu = giaodich_dao.getThu();
+//       } else if (trangthai_.equals("Loai chi")){
+//           ds_loai_thu = giaodich_dao.getChi();
+//       }
 
-
+        ds_loai_thu = giaodich_dao.getThu();
        adapterSpThu = new Adapter_sp_thu(ds_loai_thu,getContext());
        sp_pl_giaodich.setAdapter(adapterSpThu);
 
@@ -132,7 +135,7 @@ public class Bottom_sheet_giaodich extends BottomSheetDialogFragment {
     }
 
     public void capnhat(){
-        ds_thu = giaodich_dao.getKhoanThu();
+        ds_thu = giaodich_dao.getKhoanThu_Chi("Thu");
         khoanthu_adapter = new Khoanthu_Adapter(ds_thu, getContext());
         rv_thu.setAdapter(khoanthu_adapter);
     }
